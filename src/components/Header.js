@@ -1,41 +1,67 @@
 import { MenuOpen } from "@mui/icons-material";
-import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Typography, Button, Drawer, useTheme } from "@mui/material";
 import React from "react";
 
-class Header extends React.Component {
+export default function Header() {
 
-    render() {
+    const theme = useTheme();
 
-        return (
-            <AppBar position="static">
+    const drawerWidth = 240;
 
-                <Toolbar>
+    const [open, setOpen] = React.useState(false);
+    const handleMenuButton = () => setOpen(!open);
 
-                    <IconButton
-                        size="large"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuOpen />
-                    </IconButton>
+    return (
+        <AppBar 
+            position="static"
+            sx={{
+                
+                    transition: theme.transitions.create(['margin', 'width'], {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.leavingScreen,
+                    }),
+                    ...(open && {
+                        width: `calc(100% - ${drawerWidth}px)`,
+                        marginLeft: `${drawerWidth}px`,
+                        transition: theme.transitions.create(['margin', 'width'], {
+                            easing: theme.transitions.easing.easeOut,
+                            duration: theme.transitions.duration.enteringScreen,
+                        }),
+                    })
+                }}
+        >
 
-                    <Typography
-                        variant="h6"
-                        sx={{ flexGrow: 1 }}
-                    >
-                        eMatura
-                    </Typography>
+            <Toolbar>
 
-                    <Button variant="contained" color="primary">O stranici</Button>
+                <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleMenuButton}
+                    sx={{ mr: 2 }}
+                >
+                    <MenuOpen />
+                </IconButton>
 
-                </Toolbar>
+                <Typography
+                    variant="h6"
+                    sx={{ flexGrow: 1 }}
+                >
+                    eMatura
+                </Typography>
 
-            </AppBar>
-        )
+                <Button variant="contained" color="primary">O stranici</Button>
 
-    }
+            </Toolbar>
+            <Drawer
+                anchor="left"
+                open={open}
+                variant="persistent"
+            >
+
+            </Drawer>
+
+        </AppBar>
+    )
 
 }
-
-export default Header;
