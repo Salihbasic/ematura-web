@@ -1,26 +1,24 @@
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
-import { grey } from "@mui/material/colors";
-import React from "react";
+import React, { useState } from "react";
+import Content from "./components/Content";
 import Header from "./components/Header";
 
-class App extends React.Component {
+export default function App() {
 
-    theme = createTheme({
+    const theme = createTheme({
         
-    })
+    });
 
-    render() {
+    const [open, setOpen] = useState(false);
+    const handleDrawerButton = () => setOpen(!open);
 
-        return (
-            <ThemeProvider theme={this.theme}>
-                <Header />
-            </ThemeProvider>
+    return (
+        <ThemeProvider theme={theme}>
+            <Header drawerWidth="240" drawerButtonHandler={handleDrawerButton} drawerOpen={open} />
+            <Content drawerWidth="240" drawerOpen={open} />
+        </ThemeProvider>
 
-        )
-
-    }
+    )
 
 }
-
-export default App;
