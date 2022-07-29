@@ -1,6 +1,7 @@
 import { MenuOpen } from "@mui/icons-material";
 import { AppBar, 
          Box, 
+         Stack,
          Toolbar, 
          IconButton, 
          Typography, 
@@ -18,13 +19,16 @@ import React from "react";
 function DrawerHeader() {
 
     return (
-        <Box
-            sx={{
 
-                    display: 'flex',
-                    alignItems: 'center',
-                    paddingBottom: '50px'
-                }}
+        <Stack
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+            sx={{ 
+                paddingTop: '20px',
+                paddingBottom: '50px' 
+            }}
         >
             <Typography
                 variant="h6"
@@ -32,7 +36,11 @@ function DrawerHeader() {
             >
                 Testovi
             </Typography>
-        </Box>
+
+            <Button variant="text" color="primary">O stranici</Button>
+
+        </Stack>
+
     )
 
 }
@@ -85,8 +93,6 @@ export default function Header(props) {
                 >
                     eMatura
                 </Typography>
-
-                <Button variant="contained" color="primary">O stranici</Button>
 
             </Toolbar>
             <Drawer
