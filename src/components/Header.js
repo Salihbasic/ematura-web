@@ -1,6 +1,5 @@
 import { MenuOpen } from "@mui/icons-material";
 import { AppBar, 
-         Box, 
          Stack,
          Toolbar, 
          IconButton, 
