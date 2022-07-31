@@ -45,7 +45,6 @@ export default function Content(props) {
 
     const secondText = sQuest.qText;
     const secondAnswers = sQuest.answers;
-    fyShuffle(secondAnswers);
 
     return (
         <Box 
