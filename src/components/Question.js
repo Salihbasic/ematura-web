@@ -1,6 +1,6 @@
 import { Typography, Box } from "@mui/material";
 import { useState } from "react";
-import { ZaokruziButton } from "./QuestionButtons.mjs";
+import { AnswerButton, NextQuestionButton, PreviousQuestionButton } from "./QuestionButtons.mjs";
 
 function QuestionText(props) {
 
@@ -34,14 +34,18 @@ export default function Question(props) {
                 border="1px dashed red"
             >
 
+                <PreviousQuestionButton />
+
                 {questionAnswers.map(answr => {
-                    return (<ZaokruziButton 
+                    return (<AnswerButton 
                         answerText={answr.answer} 
                         isAnswered={answered} 
                         answerClickHandler={answerClickHandler}
                         isRightAnswer={answr.isCorrect}
                     />)
                 })}
+
+                <NextQuestionButton />
             
             </Box>
 

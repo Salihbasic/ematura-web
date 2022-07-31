@@ -1,6 +1,7 @@
-import { Button } from "@mui/material";
+import { NavigateBeforeOutlined, NavigateNextOutlined } from "@mui/icons-material";
+import { Button, IconButton } from "@mui/material";
 
-export function ZaokruziButton(props) {
+export function AnswerButton(props) {
 
     const answerText = props.answerText;
 
@@ -20,6 +21,40 @@ export function ZaokruziButton(props) {
         >
             {answerText}
         </Button>
+    )
+
+}
+
+export function NextQuestionButton(props) {
+
+    const clickHandler = props.clickHandler;
+
+    return (
+
+        <IconButton
+            aria-label="next-question-btn"
+            onClick={clickHandler}
+        >
+            <NavigateNextOutlined fontSize="medium" />
+        </IconButton>
+        
+    )
+
+}
+
+export function PreviousQuestionButton(props) {
+
+    const clickHandler = props.clickHandler;
+
+    return (
+
+        <IconButton
+            aria-label="previous-question-btn"
+            onClick={clickHandler}
+        >
+            <NavigateBeforeOutlined fontSize="medium" />
+        </IconButton>
+        
     )
 
 }

@@ -1,5 +1,5 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { getQuestionsByName } from "../api/QuestionsFetcher.mjs";
+import { Box, useTheme } from "@mui/material";
+import { getQuestion, getQuestionsByFile } from "../api/QuestionsFetcher.mjs";
 import Question from "./Question";
 
 /*
@@ -34,21 +34,18 @@ export default function Content(props) {
 
     const open = props.drawerOpen;
 
-    const bosanskiQuestions = getQuestionsByName("bosanski");
-    const firstText = bosanskiQuestions[0].question;
-    
-    const firstRightAnswers = bosanskiQuestions[0].rightAnswers.map(answr => ({
-        answer: answr,
-        isCorrect: true
-    }));
+    const bosanskiQuestions = getQuestionsByFile("bosanski");
 
-    const firstWrongAnswers = bosanskiQuestions[0].wrongAnswers.map(answr => ({
-        answer: answr,
-        isCorrect: false
-    }));
+    const fQuest = getQuestion(bosanskiQuestions, 0);
+    const sQuest = getQuestion(bosanskiQuestions, 1);
 
-    const firstAnswers = [...firstRightAnswers, ...firstWrongAnswers];
+    const firstText = fQuest.qText;
+    const firstAnswers = fQuest.answers;
     fyShuffle(firstAnswers);
+
+    const secondText = sQuest.qText;
+    const secondAnswers = sQuest.answers;
+    fyShuffle(secondAnswers);
 
     return (
         <Box 
@@ -73,8 +70,8 @@ export default function Content(props) {
             }}
         >
 
-            <Typography variant="h1">Content test</Typography>
             <Question questionText={firstText} questionAnswers={firstAnswers} />
+            <Question questionText={secondText} questionAnswers={secondAnswers} />
 
         </Box>
     )
