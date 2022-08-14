@@ -1,0 +1,16 @@
+.test {
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+}
+
+.test-header {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+
+}

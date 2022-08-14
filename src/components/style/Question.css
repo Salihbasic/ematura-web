@@ -1,0 +1,31 @@
+.test-questions {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 16px;
+    gap: 8px
+
+}
+
+.question {
+
+    padding: 16px;
+
+}
+
+.question > p {
+
+    padding-bottom: 8px;
+
+}
+
+.question-answers {
+
+    display: grid;
+    align-items: center;
+    margin: auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px
+
+}

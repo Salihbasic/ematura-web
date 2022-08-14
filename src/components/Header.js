@@ -1,10 +1,9 @@
-import { MenuOpen } from "@mui/icons-material";
+import { Home, MenuOpen } from "@mui/icons-material";
 import { AppBar, 
          Stack,
          Toolbar, 
          IconButton, 
          Typography, 
-         Button, 
          Drawer, 
          useTheme, 
          Divider, 
@@ -13,6 +12,7 @@ import { AppBar,
          ListItemButton, 
          ListItemText } from "@mui/material";
 import React from "react";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 
 function DrawerHeader() {
@@ -25,8 +25,8 @@ function DrawerHeader() {
             justifyContent="center"
             spacing={1}
             sx={{ 
-                paddingTop: '20px',
-                paddingBottom: '50px' 
+                paddingTop: '16px',
+                paddingBottom: '16px' 
             }}
         >
             <Typography
@@ -35,8 +35,6 @@ function DrawerHeader() {
             >
                 Testovi
             </Typography>
-
-            <Button variant="text" color="primary">O stranici</Button>
 
         </Stack>
 
@@ -48,10 +46,14 @@ function DrawerHeader() {
 export default function Header(props) {
 
     const theme = useTheme();
+    const location = useLocation();
 
-    const dWidth = parseInt(props.drawerWidth)
+    const dWidth = props.drawerWidth;
     const handleMenuButton = props.drawerButtonHandler;
     const open = props.drawerOpen;
+    
+    const testList = props.testList;
+    const handleTest = props.handleTest;
 
     return (
         <AppBar 
@@ -79,7 +81,7 @@ export default function Header(props) {
                 <IconButton
                     size="large"
                     color="inherit"
-                    aria-label="menu"
+                    aria-label="menu-button"
                     onClick={handleMenuButton}
                     sx={{ mr: 2 }}
                 >
@@ -92,6 +94,17 @@ export default function Header(props) {
                 >
                     eMatura
                 </Typography>
+
+                <IconButton
+                    component={RouterLink}
+                    to={`/`}
+                    size="large"
+                    color="inherit"
+                    aria-label="home-button"
+                    sx={{ ml: 2 }}
+                >
+                    <Home />
+                </IconButton>
 
             </Toolbar>
             <Drawer
@@ -112,12 +125,33 @@ export default function Header(props) {
 
                 <List>
 
-                    {['Test 2012', 'Test 2013', 'Test 2014', 'Test 2015'].map((text) => (
 
-                        <ListItem key={text}>
-                            <ListItemButton>
-                                <ListItemText primary={text} />
+                    {Object.keys(testList).map(key => (
+
+                        <ListItem key={key}>
+
+                            <ListItemButton component={RouterLink}
+                                            to={`tests/${key}`}
+                                            onClick={() => {
+
+                                                /*
+                                                    Resets the counter if the same test is clicked.
+                                                    Hacky workaround until I find a better solution.
+                                                */
+                                                if (location.pathname === `/tests/${key}`) {
+                                                    handleTest("reset"); /* Will run a structuredCopy on the current test object */
+                                                } else {
+                                                    handleTest(key);
+                                                }
+
+
+                                            }}
+                                >
+
+                                <ListItemText primary={capitalise(key)} />
+
                             </ListItemButton>
+
                         </ListItem>
 
                     ))}
@@ -130,3 +164,8 @@ export default function Header(props) {
     )
 
 }
+
+/*
+    Helper functions for test name resolution
+*/
+const capitalise = (str) => str ? (str[0].toUpperCase() + str.slice(1)) : "";

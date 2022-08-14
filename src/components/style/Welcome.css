@@ -1,0 +1,45 @@
+.welcome-header {
+
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: justify;
+    align-items: center;
+
+}
+
+.welcome-chips {
+
+    margin-top: 8px;
+    display: inherit;
+    flex-wrap: inherit;
+    flex-direction: row;
+    gap: 8px;
+
+}
+
+.welcome-main {
+
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+    align-items: center;
+
+}
+
+div.welcome-main > p {
+
+    padding: 8px;
+
+}
+
+div.welcome-main > hr {
+
+    border: 5px black solid;
+    background-color: black;
+    padding: 4px;
+
+}

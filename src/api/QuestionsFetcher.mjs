@@ -1,18 +1,22 @@
 import data from "../data/bosanski.json"
 
-export const getQuestionsByFile = (file) => data[file];
+export const getQuestionsByName = (name) => {
+ 
+    return data[name].map((q, idx) => getQuestion(q, idx));
 
-export const getQuestion = (questions, idx) => {
+}
 
-    const q = questions[idx];
-    const qtype = q.type;
+export const getQuestion = (question) => {
+
+    const qtype = question.type;
+    const text = question.question;
 
     if (qtype === "zaokruzi") {
         
         return {
             type: qtype,
-            qText: q.question,
-            answers: fyShuffle(getZaokruziAnswers(q))
+            qText: text,
+            answers: getZaokruziAnswers(question)
         };
 
     }
@@ -21,8 +25,8 @@ export const getQuestion = (questions, idx) => {
 
         return {
             type: qtype,
-            qText: q.question,
-            answers: getDaNeAnswers(q)
+            qText: text,
+            answers: getDaNeAnswers(question)
         };
 
     }
@@ -54,29 +58,5 @@ const getDaNeAnswers = (dane) => {
         { answer: "Da", isCorrect: rAnswr }, 
         { answer: "Ne", isCorrect: !rAnswr }
     ]
-
-}
-
-/*
-    Basic implementation of the Fisher-Yates shuffle algorithm.
-
-    We use it here to shuffle the array of question objects passed onto the 
-    component as a property before rendering it, so as to ensure randomised
-    order.
-*/
-const fyShuffle = (array) => {
-
-    var m = array.length;
-    var i;
-
-    while (m) {
-
-        i = Math.floor(Math.random() * m--);
-
-        [array[m], array[i]] = [array[i], array[m]]
-
-    }
-
-    return array;
 
 }
