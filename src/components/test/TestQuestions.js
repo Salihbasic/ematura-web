@@ -4,7 +4,9 @@ import Question from "../questions/Question";
 export default function TestQuestions(props) {
 
     const test = props.test;
+
     const updateStats = props.updateStats;
+    const addWrongAnswer = props.addWrongAnswer;
 
     return (
         
@@ -12,7 +14,7 @@ export default function TestQuestions(props) {
             {test.questions.map((quest, idx) => (
 
                 <Paper elevation={3}>
-                    <Question key={idx} test={test} question={quest} updateStats={updateStats} />
+                    <Question key={idx} test={test} question={quest} qidx={idx} updateStats={updateStats} addWrongAnswer={addWrongAnswer} />
                 </Paper>
             
             ))}

@@ -10,6 +10,7 @@ export default function MainContent(props) {
     const drawerOpen = props.drawerOpen;
 
     const test = props.test;
+    const addNewTest = props.addNewTest;
 
     return (
         <Box
@@ -37,7 +38,7 @@ export default function MainContent(props) {
                 </Route>
                 
                 <Route path="tests">
-                    <Route path=":currentTest" element={ <Test test={test} /> } />
+                    <Route path=":currentTest" element={ <Test test={test} addNewTest={addNewTest} /> } />
                 </Route>
 
                 <Route path="*" element={

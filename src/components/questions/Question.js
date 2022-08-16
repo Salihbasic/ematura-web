@@ -7,13 +7,19 @@ import "../stylesheets/Question.css";
 export default function Question(props) {
 
     const test = props.test;
+    const qidx = props.qidx;
 
     const updateStats = props.updateStats;
+    const addWrongAnswer = props.addWrongAnswer;
 
     const [answered, setAnswered] = useState({ answered: false, correct: false });
     const answerHandler = (corr) => {
         updateStats(corr);
         setAnswered({ answered: true, correct: corr });
+
+        if (!corr) {
+            addWrongAnswer(qidx);
+        }
     }
 
     useEffect(() => {

@@ -8,6 +8,9 @@ export default function FinishButton(props) {
 
     const stats = props.stats;
 
+    const wrongAnswers = props.wrongAnswers;
+    const addNewTest = props.addNewTest;
+
     const [open, setOpen] = useState(false);
 
     return (
@@ -50,14 +53,45 @@ export default function FinishButton(props) {
                         Netačno ste odgovorili {stats.incorrect} pitanja. 
                     </Typography>
 
+                    {(stats.incorrect !== 0) && 
+                        <Typography variant="body1">
+                            Želite li ponovo pokušati odgovoriti netačno odgovorena pitanja?
+                        </Typography>
+                    }
+
                 </DialogContent>
 
                 <DialogActions>
 
-                    <Button variant="contained" 
-                            onClick={() => setOpen(false)}>
-                        Ok
-                    </Button>
+                    {(stats.incorrect === 0) &&
+
+                        <Button variant="contained" 
+                                onClick={() => setOpen(false)}>
+                            Ok
+                        </Button>
+
+                    }
+
+                    {(stats.incorrect !== 0) &&
+                    
+                        <>
+
+                        <Button variant="contained"
+                                onClick={() => {
+                                    addNewTest(wrongAnswers);
+                                    setOpen(false);
+                                }}>
+                            Da
+                        </Button>
+
+                        <Button variant="contained" 
+                                onClick={() => setOpen(false)}>
+                            Ne
+                        </Button>
+                        
+                        </>
+
+                    }
 
                 </DialogActions>
 

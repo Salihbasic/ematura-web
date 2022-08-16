@@ -10,6 +10,7 @@ import FinishButton from "./FinishButton";
 export default function Test(props) {
 
     const test = props.test;
+    const addNewTest = props.addNewTest;
 
     const params = useParams();
     const currentTestName = params.currentTest;
@@ -33,6 +34,18 @@ export default function Test(props) {
         incorrect: (!corr ? prevState.incorrect + 1 : prevState.incorrect)
     }));
 
+    const [wrongAnswers, setWrongAnswers] = useState(
+        {
+            name: test.name.concat("-wrong"),
+            questions: []
+        }
+    );
+    const addWrongAnswer = (idx) => setWrongAnswers(current => ({
+        ...current, 
+
+        questions: [...current.questions, test.questions[idx]]
+    }));
+
     const [finished, setFinished] = useState(false);
     const finishHandler = () => setFinished(true);
 
@@ -49,6 +62,15 @@ export default function Test(props) {
 
     useEffect(() => {
         setFinished(false);
+    }, [test]);
+
+    useEffect(() => {
+        setWrongAnswers(
+            {
+                name: test.name.concat("-wrong"),
+                questions: []
+            }
+        );
     }, [test]);
 
     return (
@@ -75,10 +97,10 @@ export default function Test(props) {
 
                 </div>
 
-                <TestQuestions test={test} updateStats={updateStats} />
+                <TestQuestions test={test} updateStats={updateStats} addWrongAnswer={addWrongAnswer} />
 
                 <div className="test-footer">
-                    <FinishButton finishHandler={finishHandler} stats={stats} />
+                    <FinishButton finishHandler={finishHandler} stats={stats} wrongAnswers={wrongAnswers} addNewTest={addNewTest} />
                 </div>
 
                 </>
