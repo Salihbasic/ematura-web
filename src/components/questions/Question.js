@@ -36,7 +36,8 @@ export default function Question(props) {
             <div className="question-answers">
             {answers.map((answer, idx) => (
 
-                <QuestionAnswer key={idx} correct={answer.isCorrect}
+                <QuestionAnswer key={idx} 
+                                correct={answer.isCorrect}
                                 answered={answered}
                                 answerHandler={answerHandler}
                                 answerText={answer.answer} />

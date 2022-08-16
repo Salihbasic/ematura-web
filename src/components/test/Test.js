@@ -5,6 +5,7 @@ import TestQuestions from "./TestQuestions";
 import TestTimer from "./TestTimer";
 
 import "../stylesheets/Test.css"
+import FinishButton from "./FinishButton";
 
 export default function Test(props) {
 
@@ -15,22 +16,39 @@ export default function Test(props) {
     
     const [stats, setStats] = useState(
         { 
+            total: test.questions.length, /* Total number of solved questions */
             answered: 0, 
-            correct: 0 
+            correct: 0,
+            incorrect: 0,
+            unanswered: test.questions.length /* Since they are not technically incorrect */ 
         }
     );
     const updateStats = (corr) => setStats(prevState => ({
         ...prevState,
+        
         answered: (prevState.answered + 1),
-        correct: (corr ? prevState.correct + 1 : prevState.correct)
+        unanswered: (prevState.unanswered - 1), /* since this one is answered */
+
+        correct: (corr ? prevState.correct + 1 : prevState.correct),
+        incorrect: (!corr ? prevState.incorrect + 1 : prevState.incorrect)
     }));
+
+    const [finished, setFinished] = useState(false);
+    const finishHandler = () => setFinished(true);
 
     useEffect(() => {
         setStats(
-        { 
-            answered: 0, 
-            correct: 0 
-        });
+            { 
+                total: test.questions.length, /* Total number of solved questions */
+                answered: 0, 
+                correct: 0,
+                incorrect: 0,
+                unanswered: test.questions.length /* Since they are not technically incorrect */ 
+            });
+    }, [test]);
+
+    useEffect(() => {
+        setFinished(false);
     }, [test]);
 
     return (
@@ -48,7 +66,7 @@ export default function Test(props) {
                     </section>
 
                     <section className="test-header">
-                        <TestTimer test={test} />
+                        <TestTimer test={test} finished={finished} />
                     </section>
 
                     <section className="test-header">
@@ -58,6 +76,10 @@ export default function Test(props) {
                 </div>
 
                 <TestQuestions test={test} updateStats={updateStats} />
+
+                <div className="test-footer">
+                    <FinishButton finishHandler={finishHandler} stats={stats} />
+                </div>
 
                 </>
             }

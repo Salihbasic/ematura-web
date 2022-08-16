@@ -14,3 +14,12 @@
     padding: 8px;
 
 }
+
+.test-footer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    
+}

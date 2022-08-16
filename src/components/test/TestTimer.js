@@ -1,23 +1,34 @@
 import { Typography } from "@mui/material";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function TestTimer(props) {
 
     const test = props.test;
+    const finished = props.finished
 
     /*
         We are tracking time in milliseconds
     */
+    const timer = useRef(null);
+
     const [time, setTime] = useState(0);
     useEffect(() => {
 
-        let tick = setInterval(() => {
+        if (!finished) {
+            startTimer();
+        }
+
+        return (() => clearInterval(timer.current))
+
+    }, [finished]);
+
+    const startTimer = () => {
+        
+        timer.current = setInterval(() => {
             setTime(current => current + 1000)
-        }, 1000)
+        }, 1000);
 
-        return (() => clearInterval(tick))
-
-    }, [time]);
+    }
 
     /* Reset time whenever test object changes */
     useEffect(() => {
