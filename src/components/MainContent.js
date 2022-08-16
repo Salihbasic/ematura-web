@@ -1,6 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import Test from "./Test";
+import Test from "./test/Test";
 import Welcome from "./Welcome";
 
 export default function MainContent(props) {

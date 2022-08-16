@@ -1,5 +1,5 @@
 import { Paper } from "@mui/material";
-import Question from "./Question";
+import Question from "../questions/Question";
 
 export default function TestQuestions(props) {
 

@@ -1,7 +1,7 @@
 import { BugReportOutlined, GitHub, QuestionMarkOutlined, ReceiptLongOutlined } from "@mui/icons-material";
 import { Chip, Divider, Link, Typography } from "@mui/material"
 import { useState } from "react"
-import "./style/Welcome.css"
+import "./stylesheets/Welcome.css"
 
 export default function Welcome(props) {
 

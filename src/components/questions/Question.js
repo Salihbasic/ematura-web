@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import QuestionAnswer from "./QuestionAnswer";
 
-import "./style/Question.css";
+import "../stylesheets/Question.css";
 
 export default function Question(props) {
 

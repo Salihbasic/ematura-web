@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import TestQuestions from "./TestQuestions";
 import TestTimer from "./TestTimer";
 
-import "./style/Test.css"
+import "../stylesheets/Test.css"
 
 export default function Test(props) {
 
