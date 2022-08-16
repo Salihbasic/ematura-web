@@ -20,7 +20,7 @@ export default function App() {
     const handleTest = (name) => {
 
         if (name === "reset") {
-            setTest(test => structuredClone(test));
+            setTest(test => shuffleTest(structuredClone(test)));
         } else {
             setTest(shuffleTest(testList[name]))
         }
