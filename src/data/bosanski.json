@@ -16,6 +16,21 @@
             "question": "Poznati bosanski pisani spomenici su?\n", 
             "rightAnswers": ["natpisi na ste\u0107cima\n"], 
             "wrongAnswers": ["dame\n", "balade\n", "pjesme\n"]
-        } 
+        },
+        {
+            "type":"dopuni",
+            "question":"Kakva je po sastavu re\u010denica \"Kad uredi\u0161 zapisnik, donesi ga na potpis.\"? {{{1}}} odnosno {{{2}}}\n",
+            "rightAnswers":{
+                "1":[
+                    "prosta",
+                    "prosto-pro\u0161irena",
+                    "pro\u0161irena"
+                ],
+                "2":[
+                    "jednostavna"
+                ]
+            }
+        }
+
     ]
 }

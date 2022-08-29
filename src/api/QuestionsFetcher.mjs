@@ -31,6 +31,16 @@ export const getQuestion = (question) => {
 
     }
 
+    if (qtype === "dopuni") {
+
+        return {
+            type: qtype,
+            qText: text,
+            answers: getDopuniAnswers(question)
+        };
+
+    }
+
 };
 
 const getZaokruziAnswers = (zaoq) => {
@@ -58,5 +68,11 @@ const getDaNeAnswers = (dane) => {
         { answer: "Da", isCorrect: rAnswr }, 
         { answer: "Ne", isCorrect: !rAnswr }
     ]
+
+}
+
+const getDopuniAnswers = (dopuni) => {
+
+    return dopuni.rightAnswers;
 
 }
