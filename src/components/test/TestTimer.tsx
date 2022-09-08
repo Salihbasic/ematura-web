@@ -1,7 +1,9 @@
 import { Typography } from "@mui/material";
+import React from "react";
 import { useEffect, useRef, useState } from "react"
+import { Test } from "../../api/ApiTypes";
 
-export default function TestTimer(props) {
+export default function TestTimer(props: { test: Test; finished: boolean; }) {
 
     const test = props.test;
     const finished = props.finished
@@ -9,7 +11,7 @@ export default function TestTimer(props) {
     /*
         We are tracking time in milliseconds
     */
-    const timer = useRef(null);
+    const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const [time, setTime] = useState(0);
     useEffect(() => {
@@ -18,7 +20,7 @@ export default function TestTimer(props) {
             startTimer();
         }
 
-        return (() => clearInterval(timer.current))
+        return (() => clearTimeout(timer.current!))
 
     }, [finished]);
 
@@ -43,7 +45,7 @@ export default function TestTimer(props) {
 
 }
 
-const getTime = (mil) => {
+const getTime = (mil: number) => {
 
     const seconds = Math.floor((mil / 1000) % 60);
     const minutes = Math.floor((mil / 1000 / 60) % 60);

@@ -1,16 +1,17 @@
 import { BugReportOutlined, GitHub, QuestionMarkOutlined, ReceiptLongOutlined } from "@mui/icons-material";
 import { Chip, Divider, Link, Typography } from "@mui/material"
+import React from "react";
 import { useState } from "react"
 import "./stylesheets/Welcome.css"
 
-export default function Welcome(props) {
+export default function Welcome() {
 
-    const [currentContent, setCurrentContent] = useState(null);
+    const [currentContent, setCurrentContent] = useState<string | null>(null);
     /* 
         If the same value has already been set, it'll be reset to null. This way, clicking on the chip
         that is already open immediately closes it.
     */
-    const handleChips = (testVal) => currentContent === testVal ? setCurrentContent(null) : setCurrentContent(testVal);
+    const handleChips = (testVal: string) => currentContent === testVal ? setCurrentContent(null) : setCurrentContent(testVal)
 
     return (
 

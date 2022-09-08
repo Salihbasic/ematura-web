@@ -1,6 +1,11 @@
 import { Button } from "@mui/material";
+import React from "react";
+import { Answered } from "./Question";
 
-export default function QuestionAnswer(props) {
+export default function QuestionAnswer(props: { answerHandler: (corr: boolean) => void; 
+                                                answered: Answered; 
+                                                answerText: string; 
+                                                correct: boolean; }) {
 
     const answerHandler = props.answerHandler;
     const answered = props.answered;

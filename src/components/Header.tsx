@@ -9,11 +9,9 @@ import { AppBar,
          Divider, 
          List, 
          ListItem, 
-         ListItemButton, 
-         ListItemText } from "@mui/material";
+         ListItemText, 
+         ListItemButton} from "@mui/material";
 import React from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-
 
 function DrawerHeader() {
 
@@ -43,17 +41,21 @@ function DrawerHeader() {
 }
 
 
-export default function Header(props) {
+export default function Header(props: { drawerWidth: number; 
+                                        drawerButtonHandler: () => void; 
+                                        drawerOpen: boolean; 
+                                        homeButtonHandler: () => void;
+                                        testList: string[];
+                                        changeTest: ((testName: string) => void) }) {
 
     const theme = useTheme();
-    const location = useLocation();
 
     const dWidth = props.drawerWidth;
     const handleMenuButton = props.drawerButtonHandler;
     const open = props.drawerOpen;
     
+    const changeTest = props.changeTest;
     const testList = props.testList;
-    const handleTest = props.handleTest;
 
     return (
         <AppBar 
@@ -96,12 +98,11 @@ export default function Header(props) {
                 </Typography>
 
                 <IconButton
-                    component={RouterLink}
-                    to={`/`}
                     size="large"
                     color="inherit"
                     aria-label="home-button"
                     sx={{ ml: 2 }}
+                    onClick={props.homeButtonHandler}
                 >
                     <Home />
                 </IconButton>
@@ -126,30 +127,12 @@ export default function Header(props) {
                 <List>
 
 
-                    {Object.keys(testList).map(key => (
+                    {testList.map(key => (
 
                         <ListItem key={key}>
 
-                            <ListItemButton component={RouterLink}
-                                            to={`tests/${key}`}
-                                            onClick={() => {
-
-                                                /*
-                                                    Resets the counter if the same test is clicked.
-                                                    Hacky workaround until I find a better solution.
-                                                */
-                                                if (location.pathname === `/tests/${key}`) {
-                                                    handleTest("reset"); /* Will run a structuredCopy on the current test object */
-                                                } else {
-                                                    handleTest(key);
-                                                }
-
-
-                                            }}
-                                >
-
-                                <ListItemText primary={capitalise(key)} />
-
+                            <ListItemButton onClick={() => changeTest(key)}>
+                                <ListItemText primary={key} />
                             </ListItemButton>
 
                         </ListItem>
@@ -164,8 +147,3 @@ export default function Header(props) {
     )
 
 }
-
-/*
-    Helper functions for test name resolution
-*/
-const capitalise = (str) => str ? (str[0].toUpperCase() + str.slice(1)) : "";

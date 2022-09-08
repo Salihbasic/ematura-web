@@ -1,15 +1,16 @@
 import { CheckBox } from "@mui/icons-material";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import React from "react";
 import { useState } from "react";
+import { TestStats } from "./Test";
 
-export default function FinishButton(props) {
+export default function FinishButton(props: { finishHandler: () => void; 
+                                              stats: TestStats;
+                                              restartHandler: () => void }) {
 
     const finishHandler = props.finishHandler;
 
     const stats = props.stats;
-
-    const wrongAnswers = props.wrongAnswers;
-    const addNewTest = props.addNewTest;
 
     const [open, setOpen] = useState(false);
 
@@ -78,8 +79,8 @@ export default function FinishButton(props) {
 
                         <Button variant="contained"
                                 onClick={() => {
-                                    addNewTest(wrongAnswers);
                                     setOpen(false);
+                                    props.restartHandler();
                                 }}>
                             Da
                         </Button>
@@ -101,7 +102,7 @@ export default function FinishButton(props) {
 
 }
 
-const getPercent = (num, total) => {
+const getPercent = (num: number, total: number) => {
     
     const prct = (num / total) * 100;
 

@@ -1,26 +1,31 @@
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import QuestionAnswer from "./QuestionAnswer";
+import { Test as TestType, Question as QuestionType, ButtonAnswer, DopuniAnswer as DopuniAnswerType } from "../../api/ApiTypes";
 
 import "../stylesheets/Question.css";
 import DopuniAnswer from "./DopuniAnswer";
+import { TestStats } from "../test/Test";
+import React from "react";
 
-export default function Question(props) {
+export default function Question(props: { test: TestType; 
+                                          updateStats: (option: boolean | TestStats) => void; 
+                                          question: QuestionType; 
+                                          addIncorrectAnswer: (answer: QuestionType) => void;
+                                        }) {
 
     const test = props.test;
-    const qidx = props.qidx;
 
     const updateStats = props.updateStats;
-    const addWrongAnswer = props.addWrongAnswer;
 
     const question = props.question;
 
-    const text = question.qText.replaceAll(/\{{3}[\S]*\}{3}/ig, "______");
+    const text = question.question.replaceAll(/\{{3}[\S]*\}{3}/ig, "______");
     const answers = question.answers;
     
     /* Used by TextField in DopuniAnswer to prevent changes after answer is given */
-    const [specificValues, setSpecificValues] = useState([{}]);
-    const handleSpecificValues = (label, corr) => {
+    const [specificValues, setSpecificValues] = useState<SpecificValue[]>([{label: "", correct: false}]);
+    const handleSpecificValues = (label: string, corr: boolean) => {
 
         setSpecificValues(currentVals => (
 
@@ -36,17 +41,16 @@ export default function Question(props) {
 
     }
 
-    const [answered, setAnswered] = useState({ answered: false, correct: false });
-    const answerHandler = (corr) => {
+    const [answered, setAnswered] = useState<Answered>({ answered: false, correct: false });
+    const answerHandler = (corr: boolean) => {
         updateStats(corr);
-
-        if (question.type === "dopuni" && Object.keys(answers).length)
 
         setAnswered({ answered: true, correct: corr });
 
         if (!corr) {
-            addWrongAnswer(qidx);
+            props.addIncorrectAnswer(question);
         }
+        
     }
 
     useEffect(() => {
@@ -54,7 +58,7 @@ export default function Question(props) {
     }, [test]);
 
     useEffect(() => {
-        setSpecificValues([{}]);
+        setSpecificValues([{label: "", correct: false}]);
     }, [test]);
 
     return (
@@ -68,7 +72,7 @@ export default function Question(props) {
             <div className="question-answers">
             
             {question.type !== "dopuni" &&
-                answers.map((answer, idx) => (
+                (answers as ButtonAnswer[]).map((answer: ButtonAnswer, idx: number) => (
 
                     <QuestionAnswer key={idx} 
                                     correct={answer.isCorrect}
@@ -80,11 +84,10 @@ export default function Question(props) {
             }
 
             {question.type === "dopuni" &&
-                Object.entries(answers).map(([key, value], idx) => (
+                Object.entries((answers as DopuniAnswerType)).map(([key, value], idx) => (
 
                     <DopuniAnswer key={idx}
                                   label={key}
-                                  answered={answered}
                                   answerHandler={answerHandler}
                                   correctAnswers={value}
                                   specificValues={specificValues}
@@ -98,5 +101,19 @@ export default function Question(props) {
         </div>
 
     )
+
+}
+
+export interface SpecificValue {
+
+    label: string,
+    correct: boolean
+
+}
+
+export interface Answered {
+
+    answered: boolean,
+    correct: boolean
 
 }
