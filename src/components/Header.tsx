@@ -1,4 +1,4 @@
-import { Home, MenuOpen } from "@mui/icons-material";
+import { Home, MenuOpen, Settings } from "@mui/icons-material";
 import { AppBar, 
          Stack,
          Toolbar, 
@@ -46,7 +46,8 @@ export default function Header(props: { drawerWidth: number;
                                         drawerOpen: boolean; 
                                         homeButtonHandler: () => void;
                                         testList: string[];
-                                        changeTest: ((testName: string) => void) }) {
+                                        changeTest: (testName: string) => void; 
+                                        settingsButtonHandler: () => void; }) {
 
     const theme = useTheme();
 
@@ -96,6 +97,16 @@ export default function Header(props: { drawerWidth: number;
                 >
                     eMatura
                 </Typography>
+                
+                <IconButton
+                    size="large"
+                    color="inherit"
+                    aria-label="settings-button"
+                    sx={{ ml: 2 }}
+                    onClick={props.settingsButtonHandler}
+                >
+                    <Settings />
+                </IconButton>
 
                 <IconButton
                     size="large"
@@ -106,6 +117,7 @@ export default function Header(props: { drawerWidth: number;
                 >
                     <Home />
                 </IconButton>
+
 
             </Toolbar>
             <Drawer
