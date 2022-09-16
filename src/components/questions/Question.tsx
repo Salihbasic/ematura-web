@@ -21,7 +21,9 @@ export default function Question(props: { test: TestType;
     const question = props.question;
 
     const text = question.question.replaceAll(/\{{3}[\S]*\}{3}/ig, "______");
+    
     const answers = question.answers;
+    // const rightAnswerCount = getRightAnswerNum(question.type, answers);
     
     /* Used by TextField in DopuniAnswer to prevent changes after answer is given */
     const [specificValues, setSpecificValues] = useState<SpecificValue[]>([{label: "", correct: false}]);
@@ -41,11 +43,13 @@ export default function Question(props: { test: TestType;
 
     }
 
-    const [answered, setAnswered] = useState<Answered>({ answered: false, correct: false });
+    const [answered, setAnswered] = useState<Answered>({ answered: "no", correct: false });
+
+
     const answerHandler = (corr: boolean) => {
         updateStats(corr);
 
-        setAnswered({ answered: true, correct: corr });
+        setAnswered({ answered: "yes", correct: corr });
 
         if (!corr) {
             props.addIncorrectAnswer(question);
@@ -54,7 +58,7 @@ export default function Question(props: { test: TestType;
     }
 
     useEffect(() => {
-        setAnswered({ answered: false, correct: false });
+        setAnswered({ answered: "no", correct: false });
     }, [test]);
 
     useEffect(() => {
@@ -113,7 +117,7 @@ export interface SpecificValue {
 
 export interface Answered {
 
-    answered: boolean,
+    answered: "no" | "yes" | "partially"
     correct: boolean
 
 }
