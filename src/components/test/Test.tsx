@@ -15,7 +15,12 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
     const [stats, updateStats] = useStatistics(test);
     
     const [finished, setFinished] = useState(false);
-    const finishHandler = () => setFinished(true);
+    const [finishSignal, setFinishSignal] = useState(false);
+   
+    const finishHandler = () => {
+        setFinishSignal(true);
+        setFinished(true);
+    }
 
     const [incorrectlyAnswered, setIncorrectlyAnswered] = useState<Question[]>([]);
     const addIncorrectAnswer = (answer: Question) => setIncorrectlyAnswered(previous => [...previous, answer])
@@ -39,6 +44,7 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
     useEffect(() => {
 
         setFinished(false);
+        setFinishSignal(false);
 
     }, [test]);
 
@@ -66,7 +72,7 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
 
                 </div>
 
-                <TestQuestions test={test} updateStats={updateStats} addIncorrectAnswer={addIncorrectAnswer} />
+                <TestQuestions test={test} updateStats={updateStats} finishSignal={finishSignal} addIncorrectAnswer={addIncorrectAnswer} />
 
                 <div className="test-footer">
                     <FinishButton finishHandler={finishHandler} stats={stats} restartHandler={restartWithIncorrectlyAnswered} />
