@@ -8,7 +8,7 @@ interface Test {
 
 interface Question {
 
-    type: string,
+    type: "zaokruzi" | "dopuni" | "da-ne",
     question: string,
     answers: ButtonAnswer[] | DopuniAnswer
 
