@@ -7,12 +7,13 @@ import "../stylesheets/Test.css"
 import FinishButton from "./FinishButton";
 import { Question, Test as TestType } from "../../api/ApiTypes";
 import React from "react";
+import { useTestStats } from "../../hooks/StatsHook";
 
 export default function Test(props: { test: TestType; changeTest: (testName: string | TestType) => void}) {
 
     const test = props.test;
 
-    const [stats, updateStats] = useStatistics(test);
+    const [stats, updateTest, resetTest] = useTestStats(test);
     
     const [finished, setFinished] = useState(false);
     const [finishSignal, setFinishSignal] = useState(false);
@@ -29,23 +30,14 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
 
     useEffect(() => {
 
-        updateStats(
-            { 
-                total: test.questions.length, /* Total number of solved questions */
-                answered: 0, 
-                correct: 0,
-                incorrect: 0,
-                unanswered: test.questions.length /* Since they are not technically incorrect */ 
-            }
-        );
-
-    }, [test]);
-
-    useEffect(() => {
-
         setFinished(false);
         setFinishSignal(false);
 
+        setIncorrectlyAnswered([]);
+
+        resetTest();
+
+    // eslint-disable-next-line    
     }, [test]);
 
     return (
@@ -67,12 +59,15 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
                     </section>
 
                     <section className="test-header">
-                        <Typography variant="h5">Bodovi: {stats.correct} / {stats.answered}</Typography>
+                        <Typography variant="h5">Bodovi: {stats.answeredCorrect} / {stats.rightAnswers}</Typography>
                     </section>
 
                 </div>
 
-                <TestQuestions test={test} updateStats={updateStats} finishSignal={finishSignal} addIncorrectAnswer={addIncorrectAnswer} />
+                <TestQuestions test={test} 
+                               updateTestStats={updateTest}
+                               finishSignal={finishSignal} 
+                               addIncorrectAnswer={addIncorrectAnswer} />
 
                 <div className="test-footer">
                     <FinishButton finishHandler={finishHandler} stats={stats} restartHandler={restartWithIncorrectlyAnswered} />
@@ -96,60 +91,5 @@ export default function Test(props: { test: TestType; changeTest: (testName: str
         </>
 
     )
-
-}
-
-export interface TestStats {
-
-    total: number,
-    
-    answered: number,
-    unanswered: number,
-
-    correct: number,
-    incorrect: number
-
-}
-
-const useStatistics = (test: TestType): [TestStats, (option: boolean | TestStats) => void] => {
-
-    const [stats, setStats] = useState<TestStats>(
-        { 
-            total: test.questions.length, /* Total number of solved questions */
-            answered: 0, 
-            correct: 0,
-            incorrect: 0,
-            unanswered: test.questions.length /* Since they are not technically incorrect */ 
-        }
-    );
-
-    var updateStats = (option: boolean | TestStats) => {
-        
-        if (typeof option === "boolean") {
-
-            setStats(prevState => ({
-            ...prevState,
-            
-            answered: (prevState.answered + 1),
-            unanswered: (prevState.unanswered - 1), /* since this one is answered */
-    
-            correct: (option ? prevState.correct + 1 : prevState.correct),
-            incorrect: (!option ? prevState.incorrect + 1 : prevState.incorrect)
-    
-            }));
-
-        } else {
-
-            setStats(prevState => ({
-                ...prevState,
-
-                ...option
-            }));
-
-        }
-
-    };
-
-    return [stats, updateStats];
 
 }

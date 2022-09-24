@@ -20,7 +20,7 @@ export default function Welcome() {
             <div className="welcome-header">
 
                 <Typography variant="h4">
-                    Platforma eMatura
+                    eMatura
                 </Typography>
 
                 <Typography variant="caption">

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { ButtonAnswer as ButtonAnswerType, Question, Test } from "../../api/ApiTypes";
+import { QuestionActionType, QuestionStats } from "../../hooks/StatsHook";
 import ButtonAnswer from "./ButtonAnswer";
 
 import "../stylesheets/Question.css";
-import { TestStats } from "../test/Test";
 
 export default function ButtonAnswers(props: { test: Test; 
                                                question: Question;
                                                answers: ButtonAnswerType[]; 
-                                               finishSignal: boolean; 
-                                               updateStats: (option: boolean | TestStats) => void; 
+                                               finishSignal: boolean;
+                                               questionStats: QuestionStats;
+                                               updateQuestionStats: (answered: QuestionActionType) => void;
                                                addIncorrectAnswer: (answer: Question) => void; }) {
 
     const [selected, setSelected] = useState<number[]>([]);
@@ -24,11 +25,11 @@ export default function ButtonAnswers(props: { test: Test;
             
             selected.forEach(s => {
 
-                const correct = props.answers[s].isCorrect;
+                const correct = props.answers[s].isCorrect ? "correct" : "incorrect";
 
-                props.updateStats(correct);
+                props.updateQuestionStats(correct);
                 
-                if (!correct) {
+                if (correct === "incorrect") {
                     props.addIncorrectAnswer(props.question);
                 }
 
@@ -50,7 +51,9 @@ export default function ButtonAnswers(props: { test: Test;
 
         setSelected([]);
         setAnswered(false);
+        props.updateQuestionStats("reset");
 
+    // eslint-disable-next-line
     }, [props.test]);
 
     const selectAnswer = (aIdx: number) => {

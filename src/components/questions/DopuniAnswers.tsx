@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DopuniAnswer as DopuniAnswerType, Question, Test } from "../../api/ApiTypes";
-import { TestStats } from "../test/Test";
+import { QuestionActionType, QuestionStats } from "../../hooks/StatsHook";
 import DopuniAnswer from "./DopuniAnswer";
 
 export default function DopuniAnswers(props: { test: Test;
                                                question: Question; 
                                                answers: DopuniAnswerType; 
-                                               finishSignal: boolean; 
-                                               updateStats: (option: boolean | TestStats) => void; 
+                                               finishSignal: boolean;
+                                               questionStats: QuestionStats;
+                                               updateQuestionStats: (answered: QuestionActionType) => void;
                                                addIncorrectAnswer: (answer: Question) => void; }) {
 
     const [filledFields, setFilledFields] = useState<FilledAnswers>({});
     const [answered, setAnswered] = useState<AnsweredField>({});
-
+    
     /*
         This was honestly the biggest pain to solve in this whole project
         because the problem seemed ridiculous and illogical.
@@ -43,7 +44,7 @@ export default function DopuniAnswers(props: { test: Test;
 
                 const isCorrect = Object.keys(props.answers).includes(key) && props.answers[key].includes(value)
 
-                props.updateStats(isCorrect);
+                props.updateQuestionStats(isCorrect ? "correct" : "incorrect");
 
                 if (!isCorrect) {
                     props.addIncorrectAnswer(props.question);
@@ -65,6 +66,9 @@ export default function DopuniAnswers(props: { test: Test;
 
         setAnswered({});
 
+        props.updateQuestionStats("reset");
+
+    // eslint-disable-next-line    
     }, [props.test]);
 
     return (

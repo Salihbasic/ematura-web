@@ -1,12 +1,12 @@
 import { Paper } from "@mui/material";
 import React from "react";
 import { Question as QuestionType, Test as TestType } from "../../api/ApiTypes"
-import { TestStats } from "./Test";
+import { QuestionStats, TestActionType } from "../../hooks/StatsHook";
 import AbstractQuestion from "../questions/AbstractQuestion";
 
 export default function TestQuestions(props: { test: TestType; 
                                                finishSignal: boolean;
-                                               updateStats: (option: boolean | TestStats) => void; 
+                                               updateTestStats: (actionType: TestActionType, value: QuestionStats) => void; 
                                                addIncorrectAnswer: (answer: QuestionType) => void; }) {
 
     const test = props.test;
@@ -20,7 +20,7 @@ export default function TestQuestions(props: { test: TestType;
 
                     <AbstractQuestion test={test} 
                                       finishSignal={props.finishSignal} 
-                                      updateStats={props.updateStats} 
+                                      updateTestStats={props.updateTestStats} 
                                       addIncorrectAnswer={props.addIncorrectAnswer} 
                                       question={quest} />
                               
