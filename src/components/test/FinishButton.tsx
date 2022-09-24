@@ -2,6 +2,7 @@ import { CheckBox } from "@mui/icons-material";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useSettings } from "../../contexts/SettingsContext";
 import { TestStats } from "./Test";
 
 export default function FinishButton(props: { finishHandler: () => void; 
@@ -11,6 +12,8 @@ export default function FinishButton(props: { finishHandler: () => void;
     const finishHandler = props.finishHandler;
 
     const stats = props.stats;
+
+    const settings = useSettings();
 
     const [open, setOpen] = useState(false);
 
@@ -54,7 +57,7 @@ export default function FinishButton(props: { finishHandler: () => void;
                         Netačno ste odgovorili {stats.incorrect} pitanja. 
                     </Typography>
 
-                    {(stats.incorrect !== 0) && 
+                    {(stats.incorrect !== 0) && (!settings.settings.neverRepeatTest) &&
                         <Typography variant="body1">
                             Želite li ponovo pokušati odgovoriti netačno odgovorena pitanja?
                         </Typography>
@@ -64,7 +67,7 @@ export default function FinishButton(props: { finishHandler: () => void;
 
                 <DialogActions>
 
-                    {(stats.incorrect === 0) &&
+                    {((stats.incorrect === 0) || (settings.settings.neverRepeatTest)) &&
 
                         <Button variant="contained" 
                                 onClick={() => setOpen(false)}>
@@ -73,7 +76,7 @@ export default function FinishButton(props: { finishHandler: () => void;
 
                     }
 
-                    {(stats.incorrect !== 0) &&
+                    {(stats.incorrect !== 0) && (!settings.settings.neverRepeatTest) &&
                     
                         <>
 

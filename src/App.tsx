@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTest, useTestList } from "./api/QuestionsFetcher";
 import Header from "./components/Header";
 import MainContent from "./components/MainContent";
-import { useTestSettings } from "./Settings";
+import { SettingsProvider } from "./contexts/SettingsContext";
 
 export default function App() {
 
@@ -15,7 +15,6 @@ export default function App() {
 
     const [test, changeTest, testError] = useTest();
     const [testList, testListError] = useTestList();
-    const [testSettings, updateSettings] = useTestSettings();
 
     const [open, setOpen] = useState(false);
     const handleDrawerButton = () => setOpen(!open);
@@ -66,24 +65,23 @@ export default function App() {
     return (
         
         <ThemeProvider theme={theme}>
-            
-            <Header drawerWidth={240} 
-                    drawerButtonHandler={handleDrawerButton} 
-                    drawerOpen={open}
-                    homeButtonHandler={homeButtonHandler}
-                    testList={testList}
-                    changeTest={changeTest}
-                    settingsButtonHandler={settingsButtonHandler} />
-
+            <SettingsProvider>
                 
-            <MainContent drawerWidth={240}
-                         drawerOpen={open}
-                         content={displayedContent} 
-                         test={test} 
-                         changeTest={changeTest}
-                         settingsObject={testSettings}
-                         updateSettings={updateSettings} />
+                <Header drawerWidth={240} 
+                        drawerButtonHandler={handleDrawerButton} 
+                        drawerOpen={open}
+                        homeButtonHandler={homeButtonHandler}
+                        testList={testList}
+                        changeTest={changeTest}
+                        settingsButtonHandler={settingsButtonHandler} />
 
+                <MainContent drawerWidth={240}
+                            drawerOpen={open}
+                            content={displayedContent} 
+                            test={test} 
+                            changeTest={changeTest} />
+
+            </SettingsProvider>
         </ThemeProvider>
 
     )

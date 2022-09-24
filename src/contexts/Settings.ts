@@ -1,8 +1,6 @@
 import { useState } from "react";
 
 export interface TestSettings {
-
-    showCorrectAnswersImmediately: boolean;
     
     ignoreUnansweredQuestions: boolean;
 
@@ -10,17 +8,17 @@ export interface TestSettings {
 
 }
 
+const defaultSettings: TestSettings = {
+    
+    ignoreUnansweredQuestions: false,
+
+    neverRepeatTest: false
+
+};
+
 export const useTestSettings = (): [TestSettings, <K extends keyof TestSettings>(key: K, value: TestSettings[K]) => void] => {
 
-    const [testSettings, setTestSettings] = useState<TestSettings>(
-        {
-            showCorrectAnswersImmediately: false,
-
-            ignoreUnansweredQuestions: false,
-
-            neverRepeatTest: false
-        }
-    );
+    const [testSettings, setTestSettings] = useState<TestSettings>(defaultSettings);
 
     const updateSettings = <K extends keyof TestSettings>(key: K, value: TestSettings[K]) => {
 

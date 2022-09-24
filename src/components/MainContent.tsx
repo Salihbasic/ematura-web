@@ -2,7 +2,6 @@ import { Box, useTheme } from "@mui/material";
 import React from "react";
 import { Test as TestType } from "../api/ApiTypes";
 import { ContentType } from "../App";
-import { TestSettings } from "../Settings";
 import SettingsPage from "./SettingsPage";
 import Test from "./test/Test";
 import Welcome from "./Welcome";
@@ -11,10 +10,7 @@ export default function MainContent(props: { drawerWidth: number;
                                              drawerOpen: boolean; 
                                              content: ContentType, 
                                              test: TestType | null, 
-                                             changeTest: (testName: string | TestType) => void;
-                                             settingsObject: TestSettings;
-                                             updateSettings: <K extends keyof TestSettings>(key: K, value: TestSettings[K]) => void; }
-                                    ) {
+                                             changeTest: (testName: string | TestType) => void; }) {
 
     const theme = useTheme();
 
@@ -47,7 +43,7 @@ export default function MainContent(props: { drawerWidth: number;
             }
 
             {content === "settings" &&
-                <SettingsPage settingsObject={props.settingsObject} updateSettings={props.updateSettings} />
+                <SettingsPage />
             }
             
             {content === "test" &&
