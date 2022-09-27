@@ -12,7 +12,7 @@ export const useTest = (): [Test | null, (testName: string | Test) => void, Erro
 
         if (typeof testName === "string") {
 
-            fetch(API_URL + "/test/" + testName, {
+            fetch(API_URL + "test/" + testName, {
     
                 method: 'GET',
                 mode: 'cors'
@@ -56,7 +56,7 @@ export const useTestList = (): [string[] | null, Error | null] => {
 
     useEffect(() => {
 
-        fetch(API_URL + "/tests", {
+        fetch(API_URL + "tests/", {
 
             method: 'GET',
             mode: 'cors'
