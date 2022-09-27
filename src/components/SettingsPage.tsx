@@ -39,17 +39,17 @@ export default function SettingsPage() {
             </Typography>
 
             <FormGroup>
-
-                <FormControlLabel control={
-                    <Switch checked={newSettings.ignoreUnansweredQuestions} onChange={(event) => handleChange(event, "ignoreUnansweredQuestions")} />
-                }
-                label="Ne računaj neodgovorena pitanja pogrešnim" 
-                />
                 
                 <FormControlLabel control={
                     <Switch checked={newSettings.neverRepeatTest} onChange={(event) => handleChange(event, "neverRepeatTest")} />
                 }
                 label="Onemogući ponavljanje testova" 
+                />
+
+                <FormControlLabel control={
+                    <Switch checked={newSettings.randomiseQuestions} onChange={(event) => handleChange(event, "randomiseQuestions")} />
+                }
+                label="Uvijek izmiješaj raspored pitanja"
                 />
 
             </FormGroup>

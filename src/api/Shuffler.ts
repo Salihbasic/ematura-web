@@ -1,6 +1,8 @@
-import { Test } from "./ApiTypes";
+import { Question, Test } from "./ApiTypes";
 
 export const shuffleTest = (test: Test) => fyShuffle(test.questions);
+
+export const shuffleQuestions = (questions: Question[]) => fyShuffle(questions);
 
 /*
     Basic implementation of the Fisher-Yates shuffle algorithm.
@@ -9,7 +11,7 @@ export const shuffleTest = (test: Test) => fyShuffle(test.questions);
     component as a property before rendering it, so as to ensure randomised
     order.
 */
-const fyShuffle = (array: any[]) => {
+const fyShuffle = (array: Question[]) => {
 
     var m = array.length;
     var i;

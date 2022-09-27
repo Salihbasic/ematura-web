@@ -2,17 +2,17 @@ import { useState } from "react";
 
 export interface TestSettings {
     
-    ignoreUnansweredQuestions: boolean;
-
     neverRepeatTest: boolean;
+
+    randomiseQuestions: boolean;
 
 }
 
 const defaultSettings: TestSettings = {
     
-    ignoreUnansweredQuestions: false,
+    neverRepeatTest: false,
 
-    neverRepeatTest: false
+    randomiseQuestions: true
 
 };
 
