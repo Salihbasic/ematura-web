@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider } from "@mui/material";
+import { CircularProgress, createTheme, ThemeProvider } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useTest, useTestList } from "./api/QuestionsFetcher";
 import Header from "./components/Header";
@@ -38,7 +38,21 @@ export default function App() {
 
     }, [test, testError]);
 
-    if (testList == null) {
+    if (testList === null) {
+
+        return (
+
+            <div className="loading-screen">
+
+                <CircularProgress />
+
+            </div>
+
+        );
+
+    }
+
+    if (testList === undefined) {
 
         return (
 

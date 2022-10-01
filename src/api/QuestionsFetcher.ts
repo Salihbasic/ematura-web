@@ -3,6 +3,8 @@ import { Test } from "./ApiTypes";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+type TestList = string[] | null | undefined;
+
 export const useTest = (): [Test | null, (testName: string | Test) => void, Error | null] => {
 
     const [test, setTest] = useState<Test | null>(null);
@@ -49,9 +51,9 @@ export const useTest = (): [Test | null, (testName: string | Test) => void, Erro
 
 }
 
-export const useTestList = (): [string[] | null, Error | null] => {
+export const useTestList = (): [TestList, Error | null] => {
 
-    const [testList, setTestList] = useState<string[] | null>(null);
+    const [testList, setTestList] = useState<TestList>(null);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
@@ -76,7 +78,7 @@ export const useTestList = (): [string[] | null, Error | null] => {
             
             console.log(err.message);
             
-            setTestList(null);
+            setTestList(undefined);
             setError(err);
 
         })
